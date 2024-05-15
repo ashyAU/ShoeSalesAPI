@@ -74,5 +74,19 @@ namespace ShoeSalesAPI.Controllers
         }
 
 
+        [Route("delete={sku}")]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int sku)
+        {
+            var product = await _shoeService.DeleteProduct(sku);
+
+            if (product == null)
+            {
+                return BadRequest(product);
+            }
+            return NoContent();
+        }
+
     }
+
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using ShoeSalesAPI.Models;
 
 namespace ShoeSalesAPI.Services
@@ -61,12 +62,27 @@ namespace ShoeSalesAPI.Services
                                              .Set(s => s.isAvailable, updatedShoe.isAvailable)
                                              .Set(s => s.Description, updatedShoe.Description);
 
-            // Update the shoe document in the collection
             var updateResult = await _shoeCollection.UpdateOneAsync(filter, update);
 
             var updatedProduct = await _shoeCollection.FindAsync(filter);
             return updatedProduct.FirstOrDefault();
         }
+
+        public async Task<List<Shoe>?> DeleteProduct(int sku)
+        {
+            var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
+            var delete = _shoeCollection.DeleteOneAsync(filter);
+
+            if (delete.Result.DeletedCount == 0)
+            {
+                return null;
+            }
+            return await _shoeCollection.Find(_ => true).ToListAsync();
+        }
+
+
+
+
 
 
 

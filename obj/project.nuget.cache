@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "J59sJsEys2JXMZlIwcEbtUHIFLGI9G3Ykzvh8P+GAml3+oGzmQArvy+m4WYem+gXsjDOmMDOsuptwEx65wqvFQ==",
+  "dgSpecHash": "TXXvy9DHuuom6r5Mqz6FPfNPH0d0MpYcBfxfUKZ6Ej4iXIUghxVzY3YN44NffdMjRha/j7aby+1jFaKNhrNoCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
+  "projectFilePath": "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ash\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\ash\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

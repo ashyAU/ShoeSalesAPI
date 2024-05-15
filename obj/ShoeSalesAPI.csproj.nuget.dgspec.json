@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj": {}
+    "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj": {
+    "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
         "projectName": "ShoeSalesAPI",
-        "projectPath": "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
+        "projectPath": "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\ShoeSalesAPI.csproj",
         "packagesPath": "C:\\Users\\ash\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ash\\source\\repos\\notTyTy\\Astronomical-Processing-Project\\ShoeSalesAPI\\ShoeSalesAPI\\obj\\",
+        "outputPath": "C:\\Users\\ash\\source\\repos\\ShoeSalesAPI\\ShoeSalesAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
