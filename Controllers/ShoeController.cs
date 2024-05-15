@@ -87,6 +87,22 @@ namespace ShoeSalesAPI.Controllers
             return NoContent();
         }
 
+
+        [Route("post={sku}")]
+        [HttpPost]
+        public async Task<IActionResult> Post(int sku, Shoe shoe)
+        {
+            var post = await _shoeService.AddProduct(sku, shoe);
+
+            if (post == null)
+            {
+                return BadRequest(post);
+            }
+            return Ok(post);
+
+
+
+        }
     }
 
 }

@@ -52,7 +52,12 @@ namespace ShoeSalesAPI.Services
             return await _shoeCollection.Find(shoe => shoe.isAvailable == available).ToListAsync();
         }
 
-
+        /// <summary>
+        /// updates data using the [HttpPost] request
+        /// </summary>
+        /// <param name="sku"></param>
+        /// <param name="updatedShoe"></param>
+        /// <returns>async data of the updated sku product information</returns>
         public async Task<Shoe> UpdateProduct(int sku, Shoe updatedShoe)
         {
             var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
@@ -80,6 +85,28 @@ namespace ShoeSalesAPI.Services
             return await _shoeCollection.Find(_ => true).ToListAsync();
         }
 
+        public async Task<Shoe?> AddProduct(int sku, Shoe shoe)
+        {
+            var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
+            
+            if (filter != null)
+            {
+                return null;
+            }
+            var newProduct = Builders<Shoe>.SetFields.Set(s => s.SKU, sku)
+                .Set(s => s.ProductName, shoe.ProductName)
+                .Set(s => s.Price, shoe.Price)
+                .Set(s => s.Description, shoe.Description)
+                .Set(s => s.isAvailable, shoe.isAvailable);
+
+            var item = await _shoeCollection.FindAsync(filter);
+            return item.FirstOrDefault();
+            ;
+
+
+
+
+        }
 
 
 
