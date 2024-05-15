@@ -74,7 +74,7 @@ namespace ShoeSalesAPI.Controllers
         }
 
 
-        [Route("delete={sku}")]
+        [Route("sku={sku}")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int sku)
         {
@@ -88,7 +88,7 @@ namespace ShoeSalesAPI.Controllers
         }
 
 
-        [Route("post={sku}")]
+        [Route("sku={sku}")]
         [HttpPost]
         public async Task<IActionResult> Post(int sku, Shoe shoe)
         {
@@ -99,6 +99,16 @@ namespace ShoeSalesAPI.Controllers
                 return Conflict();
             }
             return Ok(post);
+        }
+
+        [Route("productName={productName}")]
+        [HttpGet]
+        public async Task<IActionResult> GetProductName(string productName)
+        {
+            var filter = await _shoeService.GetProductByName(productName);
+
+            return Ok(filter);
+
         }
     }
 

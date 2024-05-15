@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using MongoDB.Driver.Core.Events;
 using ShoeSalesAPI.Models;
 
 namespace ShoeSalesAPI.Services
@@ -53,6 +50,18 @@ namespace ShoeSalesAPI.Services
         }
 
         /// <summary>
+        /// Finds partial string matches based on product name
+        /// </summary>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public async Task<List<Shoe>> GetProductByName(string productName)
+        {
+            return await _shoeCollection
+                .Find(s => s.ProductName.ToLower().Contains(productName.ToLower()))
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// updates data using the [HttpPost] request
         /// </summary>
         /// <param name="sku"></param>
@@ -71,23 +80,6 @@ namespace ShoeSalesAPI.Services
 
             var updatedProduct = await _shoeCollection.FindAsync(filter);
             return updatedProduct.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Deletes product based on sku. Response code is dependent on whether data exists to be deleted to begin with
-        /// </summary>
-        /// <param name="sku">the product ID </param>
-        /// <returns>204 if the deletion was a success, else an error</returns>
-        public async Task<List<Shoe>?> DeleteProduct(int sku)
-        {
-            var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
-            var delete = _shoeCollection.DeleteOneAsync(filter);
-
-            if (delete.Result.DeletedCount == 0)
-            {
-                return null;
-            }
-            return await _shoeCollection.Find(_ => true).ToListAsync();
         }
 
         /// <summary>
@@ -114,6 +106,23 @@ namespace ShoeSalesAPI.Services
             }
             return null;
 
+        }
+
+        /// <summary>
+        /// Deletes product based on sku. Response code is dependent on whether data exists to be deleted to begin with
+        /// </summary>
+        /// <param name="sku">the product ID </param>
+        /// <returns>204 if the deletion was a success, else an error</returns>
+        public async Task<List<Shoe>?> DeleteProduct(int sku)
+        {
+            var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
+            var delete = _shoeCollection.DeleteOneAsync(filter);
+
+            if (delete.Result.DeletedCount == 0)
+            {
+                return null;
+            }
+            return await _shoeCollection.Find(_ => true).ToListAsync();
         }
     }
 }
