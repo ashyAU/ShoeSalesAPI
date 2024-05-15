@@ -96,12 +96,9 @@ namespace ShoeSalesAPI.Controllers
 
             if (post == null)
             {
-                return BadRequest(post);
+                return Conflict();
             }
             return Ok(post);
-
-
-
         }
     }
 

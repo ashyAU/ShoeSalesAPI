@@ -73,6 +73,11 @@ namespace ShoeSalesAPI.Services
             return updatedProduct.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Deletes product based on sku. Response code is dependent on whether data exists to be deleted to begin with
+        /// </summary>
+        /// <param name="sku">the product ID </param>
+        /// <returns>204 if the deletion was a success, else an error</returns>
         public async Task<List<Shoe>?> DeleteProduct(int sku)
         {
             var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
@@ -85,33 +90,30 @@ namespace ShoeSalesAPI.Services
             return await _shoeCollection.Find(_ => true).ToListAsync();
         }
 
+        /// <summary>
+        /// Adds new data based on the SKU, provided its value doesn't already exist in the database
+        /// </summary>
+        /// <param name="sku">the product ID</param>
+        /// <param name="shoe">the Shoe object, such that we can set its values later</param>
+        /// <returns>The newly added object if successful, else null</returns>
         public async Task<Shoe?> AddProduct(int sku, Shoe shoe)
         {
             var filter = Builders<Shoe>.Filter.Eq(s => s.SKU, sku);
-            
-            if (filter != null)
+            var existingProduct = await _shoeCollection.Find(filter).ToListAsync();
+
+            if (existingProduct.Count == 0)
             {
-                return null;
+                shoe.SKU = sku;
+                var newProduct = Builders<Shoe>.Update.Set(s => s.SKU, shoe.SKU)
+                    .Set(s => s.ProductName, shoe.ProductName)
+                    .Set(s => s.Price, shoe.Price)
+                    .Set(s => s.Description, shoe.Description)
+                    .Set(s => s.isAvailable, shoe.isAvailable);
+                await _shoeCollection.InsertOneAsync(shoe);
+                return shoe;
             }
-            var newProduct = Builders<Shoe>.SetFields.Set(s => s.SKU, sku)
-                .Set(s => s.ProductName, shoe.ProductName)
-                .Set(s => s.Price, shoe.Price)
-                .Set(s => s.Description, shoe.Description)
-                .Set(s => s.isAvailable, shoe.isAvailable);
-
-            var item = await _shoeCollection.FindAsync(filter);
-            return item.FirstOrDefault();
-            ;
-
-
-
+            return null;
 
         }
-
-
-
-
-
-
     }
 }
