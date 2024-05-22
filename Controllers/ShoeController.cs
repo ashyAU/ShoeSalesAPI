@@ -107,6 +107,10 @@ namespace ShoeSalesAPI.Controllers
         {
             var filter = await _shoeService.GetProductByName(productName);
 
+            if (filter == null)
+            {
+                return NotFound();
+            }
             return Ok(filter);
 
         }

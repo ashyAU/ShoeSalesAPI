@@ -56,9 +56,15 @@ namespace ShoeSalesAPI.Services
         /// <returns></returns>
         public async Task<List<Shoe>> GetProductByName(string productName)
         {
-            return await _shoeCollection
+            var query = await _shoeCollection
                 .Find(s => s.ProductName.ToLower().Contains(productName.ToLower()))
                 .ToListAsync();
+
+            if (query.Count == 0)
+            {
+                return null;
+            }
+            return query;
         }
 
         /// <summary>
