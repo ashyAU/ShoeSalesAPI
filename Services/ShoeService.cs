@@ -23,11 +23,37 @@ namespace ShoeSalesAPI.Services
         /// <summary>
         /// Fetches all products based on a mongo query async task
         /// </summary>
-        /// <returns>async list of all products</returns>
-        public async Task<List<Shoe>> GetAllProducts()
+        /// <returns>async list of all products sorted by SKU</returns>
+        public async Task<List<Shoe>> GetAllProducts(string? sortedBy, string? productName)
         {
-            return await _shoeCollection.Find(_ => true).ToListAsync();
+            var allProducts = await _shoeCollection.Find(_ => true).ToListAsync();
+
+            if (productName != null)
+            {
+                allProducts = await _shoeCollection
+                    .Find(filter: s => s.ProductName.Contains(productName, StringComparison.CurrentCultureIgnoreCase))
+                    .ToListAsync();
+            }
+            if (sortedBy == "priceAsc")
+            {
+                allProducts.Sort((shoe1, shoe2) => shoe1.Price.CompareTo(shoe2.Price));
+            }
+            if (sortedBy == "priceDesc")
+            {
+                allProducts.Sort((shoe1, shoe2) => shoe2.Price.CompareTo(shoe1.Price));
+            }
+            if (sortedBy == "skuAsc")
+            {
+                allProducts.Sort((shoe1, shoe2) => shoe1.SKU.CompareTo(shoe2.SKU));
+            }
+            if (sortedBy == "skuDesc")
+            {
+                allProducts.Sort((shoe1, shoe2) => shoe2.SKU.CompareTo(shoe1.SKU));
+            }
+            return allProducts;
         }
+
+
 
         /// <summary>
         /// Fetches price range based on a mongo query async task
@@ -49,23 +75,6 @@ namespace ShoeSalesAPI.Services
             return await _shoeCollection.Find(shoe => shoe.isAvailable == available).ToListAsync();
         }
 
-        /// <summary>
-        /// Finds partial string matches based on product name
-        /// </summary>
-        /// <param name="productName"></param>
-        /// <returns></returns>
-        public async Task<List<Shoe>> GetProductByName(string productName)
-        {
-            var query = await _shoeCollection
-                .Find(s => s.ProductName.ToLower().Contains(productName.ToLower()))
-                .ToListAsync();
-
-            if (query.Count == 0)
-            {
-                return null;
-            }
-            return query;
-        }
 
         /// <summary>
         /// updates data using the [HttpPost] request
