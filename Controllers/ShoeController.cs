@@ -6,7 +6,7 @@ namespace ShoeSalesAPI.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("/v{v:apiVersion}/products")]
+    [Route("/products")]
     public class ShoeV1Controller(ShoeService shoeService) : ControllerBase
     {
         private readonly ShoeService _shoeService = shoeService;
@@ -101,7 +101,7 @@ namespace ShoeSalesAPI.Controllers
 
     [ApiVersion("2.0")]
     [ApiController]
-    [Route("/v{v:apiVersion}/products")]
+    [Route("/products")]
     public class ShoeV2Controller(ShoeService shoeService) : ControllerBase
     {
         private readonly ShoeService _shoeService = shoeService;

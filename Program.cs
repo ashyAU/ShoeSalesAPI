@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Versioning;
 using ShoeSalesAPI.Models;
 using ShoeSalesAPI.Services;
 
@@ -17,8 +18,10 @@ builder.Services.AddApiVersioning(
         options.ReportApiVersions = true;
         options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
         options.AssumeDefaultVersionWhenUnspecified = true;
-    }
-    );
+
+        options.ApiVersionReader = new HeaderApiVersionReader("X-API-Verision");
+
+    });
 builder.Services.AddVersionedApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'VVV";
