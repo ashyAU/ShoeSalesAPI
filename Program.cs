@@ -19,7 +19,7 @@ builder.Services.AddApiVersioning(
         options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
         options.AssumeDefaultVersionWhenUnspecified = true;
 
-        options.ApiVersionReader = new HeaderApiVersionReader("X-API-Verision");
+        options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 
     });
 builder.Services.AddVersionedApiExplorer(options =>
@@ -28,11 +28,24 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        _ = builder
+/*        .WithOrigins("https://localhost")
+*/        .WithHeaders("X-API-Version")
+        .AllowAnyOrigin();
+    });
+});
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,9 +53,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 

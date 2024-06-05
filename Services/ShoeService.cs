@@ -24,9 +24,16 @@ namespace ShoeSalesAPI.Services
         /// Fetches all products based on a mongo query async task
         /// </summary>
         /// <returns>async list of all products sorted by SKU</returns>
-        public async Task<List<Shoe>> GetAllProducts(string? sortedBy, string? productName)
+        public async Task<List<Shoe>> GetAllProducts(string? sortedBy, string? productName, bool isAvailable)
         {
             var allProducts = await _shoeCollection.Find(_ => true).ToListAsync();
+
+            if (isAvailable)
+            {
+                allProducts = await _shoeCollection.Find(item => isAvailable == item.isAvailable).ToListAsync();
+            }
+
+            allProducts.Find(stock => isAvailable == stock.isAvailable);
 
             if (productName != null)
             {

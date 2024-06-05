@@ -17,8 +17,10 @@ namespace ShoeSalesAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts(string? sortedBy, string? productName)
         {
+            bool isAvailable = false;
+
             // passes a boolean that decides whether to sort by SKU or price
-            var allProducts = await _shoeService.GetAllProducts(sortedBy, productName);
+            var allProducts = await _shoeService.GetAllProducts(sortedBy, productName, isAvailable);
 
             if (allProducts == null)
             {
@@ -106,15 +108,15 @@ namespace ShoeSalesAPI.Controllers
     {
         private readonly ShoeService _shoeService = shoeService;
 
-
         #region Get Requests
         // Finds all products   
         [Route("getproducts")]
         [HttpGet]
         public async Task<IActionResult> GetProducts(string? sortedBy, string? productName)
         {
+            bool isAvailable = true;
             // passes a boolean that decides whether to sort by SKU or price
-            var allProducts = await _shoeService.GetAllProducts(sortedBy, productName);
+            var allProducts = await _shoeService.GetAllProducts(sortedBy, productName, isAvailable);
 
             if (allProducts == null)
             {
@@ -194,5 +196,4 @@ namespace ShoeSalesAPI.Controllers
             return Ok(post);
         }
     }
-
 }
