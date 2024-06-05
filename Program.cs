@@ -28,19 +28,15 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        _ = builder
-/*        .WithOrigins("https://localhost")
-*/        .WithHeaders("X-API-Version")
-        .AllowAnyOrigin();
+        builder.WithOrigins("https://localhost:7085");
+        builder.WithHeaders("X-API-Version");
     });
 });
 
@@ -57,10 +53,10 @@ else
 {
     app.UseHsts();
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.UseCors();
 
 app.MapControllers();
